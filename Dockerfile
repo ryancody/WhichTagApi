@@ -15,5 +15,7 @@ ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 
 RUN pwd
+RUN cd .. && ls
+RUN pwd
 
 COPY --from=build-env /nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
