@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
 # Copy everything else and build
-COPY . ./
+COPY . .
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
@@ -14,4 +14,4 @@ ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 
 ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 
-COPY /captain/data/nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
+RUN ls
