@@ -13,3 +13,5 @@ COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 
 ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+
+COPY ./nginx-shared/appsettings.${ENVIRONMENT_NAME}.json .
