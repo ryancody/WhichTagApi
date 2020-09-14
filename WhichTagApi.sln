@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhichTagApi", "WhichTagApi\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterClient", "TwitterClient\TwitterClient.csproj", "{58A73BE5-704C-4372-99E2-9729FAE7C4A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoClient", "MongoClient\MongoClient.csproj", "{7A84B594-1EEF-4606-91E4-FC4A10C47EF9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{58A73BE5-704C-4372-99E2-9729FAE7C4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A73BE5-704C-4372-99E2-9729FAE7C4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A73BE5-704C-4372-99E2-9729FAE7C4A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A84B594-1EEF-4606-91E4-FC4A10C47EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A84B594-1EEF-4606-91E4-FC4A10C47EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A84B594-1EEF-4606-91E4-FC4A10C47EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A84B594-1EEF-4606-91E4-FC4A10C47EF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
