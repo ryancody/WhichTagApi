@@ -14,4 +14,4 @@ ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 
 ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 
-COPY ./nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
+COPY /captain/data/nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
