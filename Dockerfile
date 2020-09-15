@@ -6,6 +6,8 @@ COPY . ./
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
+ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
+
 COPY /nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
 
 # Build runtime image
@@ -14,7 +16,6 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 
-ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 
 RUN pwd
 RUN cd .. && ls
