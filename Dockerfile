@@ -15,6 +15,7 @@ ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 
 ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 
-RUN cd /settings && ls
+RUN cd /settings
+RUN ls
 
 COPY /settings/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
