@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+VOLUME [ "/settings" ]
 WORKDIR /app
 
 # Copy everything else and build
@@ -14,6 +15,4 @@ ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 
 ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 
-VOLUME [ "/nginx-shared" ]
-
-COPY /nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
+COPY /settings/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
