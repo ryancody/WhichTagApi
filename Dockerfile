@@ -6,6 +6,8 @@ COPY . ./
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
+COPY --from=build-env /nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
+
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
@@ -17,5 +19,3 @@ ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 RUN pwd
 RUN cd .. && ls
 RUN pwd
-
-COPY --from=build-env /nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
