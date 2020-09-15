@@ -6,6 +6,9 @@
 # local-appsettings
 WhichTagApi/appsettings.local.json
 
+# env vars
+WhichTagApi/Properties/launchSettings.json
+
 # User-specific files
 *.rsuser
 *.suo
