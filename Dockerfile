@@ -6,7 +6,7 @@ COPY . ./
 RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
-COPY --from=build-env /nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
+COPY /nginx-shared/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
