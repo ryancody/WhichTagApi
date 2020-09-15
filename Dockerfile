@@ -15,7 +15,5 @@ ENTRYPOINT ["dotnet", "WhichTagApi.dll"]
 
 ARG ASPNETCORE_ENVIRONMENT=${ENVIRONMENT_NAME}
 
-RUN cd /settings
-RUN ls
-
-COPY /settings/whichtag-api/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
+RUN docker cp . $(docker ps --filter name=srv-captain--sample-app -q):/settings/whichtag-api
+COPY /settings/appsettings.${ASPNETCORE_ENVIRONMENT}.json .
