@@ -47,12 +47,19 @@ namespace WhichTagApi
 			var twitterConfig = Configuration.GetSection("Twitter").Get<TwitterClientConfiguration>();
 			twitterConfig.Key = Environment.GetEnvironmentVariable("TWITTER_KEY");
 			twitterConfig.Secret = Environment.GetEnvironmentVariable("TWITTER_SECRET");
+			
 			services.AddTwitterClient(twitterConfig);
 
 			var mongoConfig = Configuration.GetSection("MongoDB").Get<MongoClientConfiguration>();
+			if (mongoConfig == null)
+			{
+				mongoConfig = new MongoClientConfiguration();
+			}
+
 			mongoConfig.Username = Environment.GetEnvironmentVariable("MONGO_USERNAME");
 			mongoConfig.Password = Environment.GetEnvironmentVariable("MONGO_PASSWORD");
 			mongoConfig.DbName = Environment.GetEnvironmentVariable("MONGO_DATABASENAME");
+			
 			var mongoClient = new MongoClient($"mongodb+srv://{mongoConfig.Username}:{mongoConfig.Password}@cluster0.6lvjj.mongodb.net/{mongoConfig.DbName}?retryWrites=true&w=majority");
 			services.AddSingleton(mongoClient);
 		}
