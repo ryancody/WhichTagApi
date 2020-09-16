@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
-using Twitter.Models;
+using WhichTag.TwitterClient.Models;
 
-namespace Twitter
+namespace WhichTag.TwitterClient
 {
 	public static class ServiceConfiguration
 	{

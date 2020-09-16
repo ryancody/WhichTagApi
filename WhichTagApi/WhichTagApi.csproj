@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TwitterClient\TwitterClient.csproj" />
+    <ProjectReference Include="..\TwitterClient\WhichTag.TwitterClient.csproj" />
   </ItemGroup>
 
   <ItemGroup>

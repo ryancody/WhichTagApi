@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Twitter;
-using Twitter.Models;
+using WhichTag.TwitterClient;
+using WhichTag.TwitterClient.Models.Tweets;
+using WhichTag.TwitterClient.Models.Users;
 
 namespace WhichTagApi.Controllers
 {
@@ -16,23 +14,17 @@ namespace WhichTagApi.Controllers
 		private readonly TwitterClient twitter;
 		private readonly ILogger<TwitterController> logger;
 
-
 		public TwitterController (ILogger<TwitterController> logger, TwitterClient twitter)
 		{
 			this.logger = logger;
 			this.twitter = twitter;
 		}
 
-		[HttpGet]
-		public async Task<TwitterResult> Get (string query)
+		[HttpGet("{query}")]
+		public async Task<TweetsResponse> GetQuery (string query)
 		{
-			return await twitter.GetTweetResults(query);
+			return await twitter.GetTweets(query);
 		}
 
-		[HttpGet("{query}/data")]
-		public async Task<TwitterResult> GetQuery (string query)
-		{
-			return await twitter.GetTweetResults(query);
-		}
 	}
 }

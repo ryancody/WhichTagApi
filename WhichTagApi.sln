@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhichTagApi", "WhichTagApi\WhichTagApi.csproj", "{CE71A380-4017-4957-9A20-6E56F417C142}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterClient", "TwitterClient\TwitterClient.csproj", "{58A73BE5-704C-4372-99E2-9729FAE7C4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WhichTag.TwitterClient", "TwitterClient\WhichTag.TwitterClient.csproj", "{58A73BE5-704C-4372-99E2-9729FAE7C4A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

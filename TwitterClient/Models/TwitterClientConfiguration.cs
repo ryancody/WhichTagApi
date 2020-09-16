@@ -1,4 +1,4 @@
-﻿namespace Twitter
+﻿namespace WhichTag.TwitterClient.Models
 {
 	public class TwitterClientConfiguration
 	{

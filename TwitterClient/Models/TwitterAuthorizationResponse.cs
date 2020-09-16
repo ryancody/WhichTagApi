@@ -1,4 +1,4 @@
-﻿namespace Twitter.Models
+﻿namespace WhichTag.TwitterClient.Models
 {
 	public class TwitterAuthorizationResponse
 	{
