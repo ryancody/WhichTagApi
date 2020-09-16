@@ -15,9 +15,5 @@
     <ProjectReference Include="..\TwitterClient\WhichTag.TwitterClient.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mappers\" />
-  </ItemGroup>
-
 
 </Project>

@@ -2,6 +2,6 @@
 {
 	public class UsersResponse
 	{
-		public User[] Users { get; set; }
+		public User[] data { get; set; }
 	}
 }

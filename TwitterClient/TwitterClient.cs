@@ -6,6 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using WhichTag.TwitterClient.Models.Tweets;
 using WhichTag.TwitterClient.Models.Users;
+using System.Linq;
 
 namespace WhichTag.TwitterClient
 {
@@ -25,7 +26,7 @@ namespace WhichTag.TwitterClient
 
 		public virtual async Task<UsersResponse> GetUsers (IEnumerable<string> ids)
 		{
-			var idList = string.Join(',', ids);
+			var idList = string.Join(',', ids.Distinct());
 
 			return await Get<UsersResponse>($"users?ids={idList}&user.fields=public_metrics");
 		}
