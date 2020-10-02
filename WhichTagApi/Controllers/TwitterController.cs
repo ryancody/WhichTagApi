@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +26,20 @@ namespace WhichTagApi.Controllers
 		}
 
 		[HttpGet("{query}")]
-		public async Task<TwitterData> GetQuery (string query)
+		public async Task<IActionResult> GetQuery (string query)
 		{
 			var tweets = await twitter.GetTweets(query);
-			var ids = tweets.Data.Select(t => t.author_id);
-			var users = await twitter.GetUsers(ids);
+			var ids = tweets.Data?.Select(t => t.author_id);
 
-			return TwitterDataMapper.Map(query, tweets, users);
+			if (ids != null)
+			{
+				var users = await twitter.GetUsers(ids);
+				return Ok(TwitterDataMapper.Map(query, tweets, users));
+			}
+			else
+			{
+				return NoContent();
+			}
 		}
 	}
 }

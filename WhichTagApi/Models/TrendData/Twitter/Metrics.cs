@@ -6,5 +6,6 @@
 		public int Replies { get; set; }
 		public int Quotes { get; set; }
 		public int Likes { get; set; }
+		public int PossibleViews { get; set; }
 	}
 }

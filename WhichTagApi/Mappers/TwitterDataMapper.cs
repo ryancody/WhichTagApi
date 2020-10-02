@@ -16,8 +16,8 @@ namespace WhichTagApi.Mappers
 		{
 			var metricSummary = new Metrics();
 
-			var users = usersResponse.data.ToDictionary(u => u.id);
-			var tweets = tweetsResponse.Data.ToDictionary(i => i.id, t =>
+			var users = usersResponse?.data.ToDictionary(u => u.id);
+			var tweets = tweetsResponse?.Data.ToDictionary(i => i.id, t =>
 			{
 				if (users.TryGetValue(t.author_id, out var user))
 				{
@@ -25,6 +25,7 @@ namespace WhichTagApi.Mappers
 					metricSummary.Quotes += t.public_metrics.quote_count;
 					metricSummary.Replies += t.public_metrics.reply_count;
 					metricSummary.Retweets += t.public_metrics.retweet_count;
+					metricSummary.PossibleViews += user.public_metrics.followers_count;
 
 					return new WhichTagTweet
 					{
