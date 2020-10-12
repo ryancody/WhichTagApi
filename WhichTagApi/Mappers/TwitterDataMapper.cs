@@ -12,7 +12,7 @@ namespace WhichTagApi.Mappers
 	public class TwitterDataMapper
 	{
 
-		public static TwitterData Map (string query, TweetsResponse tweetsResponse, UsersResponse usersResponse)
+		public static TwitterTrend Map (string query, TweetsResponse tweetsResponse, UsersResponse usersResponse)
 		{
 			var metricSummary = new Metrics();
 
@@ -53,7 +53,7 @@ namespace WhichTagApi.Mappers
 				}
 			});
 
-			return new TwitterData
+			return new TwitterTrend
 			{
 				QueriedAt = DateTime.Now,
 				Query = query,

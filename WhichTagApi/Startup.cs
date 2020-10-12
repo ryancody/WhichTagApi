@@ -5,9 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoConfiguration;
-using MongoDB.Driver;
 using WhichTag.TwitterClient.Models;
 using WhichTag.TwitterClient;
+using Microsoft.Extensions.Options;
+using WhichTagApi.Services;
 
 namespace WhichTagApi
 {
@@ -45,17 +46,23 @@ namespace WhichTagApi
 			services.AddTwitterClient(twitterConfig);
 
 			var mongoConfig = Configuration.GetSection("MongoDB").Get<MongoClientConfiguration>();
-			if (mongoConfig == null)
-			{
-				mongoConfig = new MongoClientConfiguration();
-			}
 
-			mongoConfig.Username = Environment.GetEnvironmentVariable("MONGO_USERNAME");
-			mongoConfig.Password = Environment.GetEnvironmentVariable("MONGO_PASSWORD");
-			mongoConfig.DbName = Environment.GetEnvironmentVariable("MONGO_DATABASENAME");
-			
-			var mongoClient = new MongoClient($"mongodb+srv://{mongoConfig.Username}:{mongoConfig.Password}@cluster0.6lvjj.mongodb.net/{mongoConfig.DbName}?retryWrites=true&w=majority");
-			services.AddSingleton(mongoClient);
+			services.Configure<MongoClientConfiguration>(a => 
+			{
+				a.ClusterUrl = mongoConfig.ClusterUrl;
+				a.DbName = mongoConfig.DbName;
+				a.TwitterTrendCollectionName = mongoConfig.TwitterTrendCollectionName;
+				a.QuerySiblingCollectionName = mongoConfig.QuerySiblingCollectionName;
+				a.Username = Environment.GetEnvironmentVariable("MONGO_USERNAME");
+				a.Password = Environment.GetEnvironmentVariable("MONGO_PASSWORD");
+				a.DbName = Environment.GetEnvironmentVariable("MONGO_DATABASENAME");
+			});
+
+			services.AddSingleton(sp => sp.GetRequiredService<IOptions<MongoClientConfiguration>>().Value);
+
+			services.AddSingleton<MongoService>();
+
+			services.AddControllers().AddNewtonsoftJson();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
