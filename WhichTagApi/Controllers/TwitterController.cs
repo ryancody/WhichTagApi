@@ -40,7 +40,7 @@ namespace WhichTagApi.Controllers
 
 			await mongoService.InsertSiblingRecord(querySibling);
 
-			if (DateTime.Compare(DateTime.UtcNow, cachedTrend.QueriedAt.AddSeconds(READ_FROM_CACHE_SECONDS)) < 0)
+			if (cachedTrend?.QueriedAt != null && DateTime.Compare(DateTime.UtcNow, cachedTrend.QueriedAt.AddSeconds(READ_FROM_CACHE_SECONDS)) < 0)
 			{
 				return Ok(cachedTrend);
 			}
