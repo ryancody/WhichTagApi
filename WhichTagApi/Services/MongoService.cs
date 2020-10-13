@@ -39,7 +39,12 @@ namespace WhichTagApi.Services
 
 		public Task InsertSiblingRecord (QuerySibling querySibling)
 		{
-			return querySiblings.InsertOneAsync(querySibling);
+			if (querySibling.Siblings.Any())
+			{ 			
+				return querySiblings.InsertOneAsync(querySibling);
+			}
+
+			return Task.CompletedTask;
 		}
 	}
 }
