@@ -9,6 +9,7 @@ using WhichTag.TwitterClient.Models;
 using WhichTag.TwitterClient;
 using Microsoft.Extensions.Options;
 using WhichTagApi.Services;
+using WhichTagApi.Mappers;
 
 namespace WhichTagApi
 {
@@ -63,6 +64,12 @@ namespace WhichTagApi
 			services.AddSingleton<MongoService>();
 
 			services.AddControllers().AddNewtonsoftJson();
+
+			var scoreCalculator = new ScoreCalculator();
+			services.AddSingleton(scoreCalculator);
+
+			var twitterDataMapper = new TwitterDataMapper(scoreCalculator);
+			services.AddSingleton(twitterDataMapper);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

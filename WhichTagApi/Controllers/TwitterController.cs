@@ -18,20 +18,22 @@ namespace WhichTagApi.Controllers
 		private readonly TwitterClient twitter;
 		private readonly MongoService mongoService;
 		private readonly ILogger<TwitterController> logger;
+		private readonly TwitterDataMapper mapper;
 
 		private readonly int READ_FROM_CACHE_SECONDS = 360;
 
-		public TwitterController (ILogger<TwitterController> logger, TwitterClient twitter, MongoService mongoService)
+		public TwitterController (ILogger<TwitterController> logger, TwitterClient twitter, MongoService mongoService, TwitterDataMapper mapper)
 		{
 			this.logger = logger;
 			this.twitter = twitter;
 			this.mongoService = mongoService;
+			this.mapper = mapper;
 		}
 
 		[HttpPost("{query}")]
-		public async Task<IActionResult> PostTrendQuery (string query, [FromBody] QueryRequestBody body)
+		public async Task<IActionResult> Query (string query, [FromBody] QueryRequestBody body)
 		{
-			var cachedTrend = mongoService.FindLatestTrendQuery(query);
+			var trend = mongoService.FindLatestTrendQuery(query);
 			var querySibling = new QuerySibling
 			{
 				 Query = query,
@@ -40,9 +42,10 @@ namespace WhichTagApi.Controllers
 
 			await mongoService.InsertSiblingRecord(querySibling);
 
-			if (cachedTrend?.QueriedAt != null && DateTime.Compare(DateTime.UtcNow, cachedTrend.QueriedAt.AddSeconds(READ_FROM_CACHE_SECONDS)) < 0)
+			if (trend?.QueriedAt != null && DateTime.Compare(DateTime.UtcNow, trend.QueriedAt.AddSeconds(READ_FROM_CACHE_SECONDS)) < 0)
 			{
-				return Ok(cachedTrend);
+				var trendDto = mapper.MapToDto(trend);
+				return Ok(trendDto);
 			}
 
 			var tweets = await twitter.GetTweets(query);
@@ -51,11 +54,13 @@ namespace WhichTagApi.Controllers
 			if (ids != null)
 			{
 				var users = await twitter.GetUsers(ids);
-				var twitterTrend = TwitterDataMapper.Map(query, tweets, users);
+				var twitterTrend = mapper.Map(query, tweets, users);
 
-				await mongoService.Create(twitterTrend);
+				await mongoService.InsertTrend(twitterTrend);
 
-				return Ok(twitterTrend);
+				var twitterTrendDto = mapper.MapToDto(twitterTrend);
+
+				return Ok(twitterTrendDto);
 			}
 		
 			return NoContent();

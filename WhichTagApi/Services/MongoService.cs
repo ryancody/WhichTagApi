@@ -32,7 +32,7 @@ namespace WhichTagApi.Services
 					.FirstOrDefault();
 		}
 
-		public Task Create (TwitterTrend twitterTrend)
+		public Task InsertTrend (TwitterTrend twitterTrend)
 		{
 			return twitterTrends.InsertOneAsync(twitterTrend);
 		}
