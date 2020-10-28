@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using WhichTag.TwitterClient.Models.Tweets;
 using WhichTag.TwitterClient.Models.Users;
 using WhichTagApi.Models.TrendData.Twitter;
+using WhichTagApi.Services;
 using WhichTagTweet = WhichTagApi.Models.TrendData.Twitter.Tweet;
 using WhichTagUser = WhichTagApi.Models.TrendData.Twitter.User;
 
@@ -11,8 +11,14 @@ namespace WhichTagApi.Mappers
 {
 	public class TwitterDataMapper
 	{
+		private readonly ScoreCalculator scoreCalculator;
 
-		public static TwitterTrend Map (string query, TweetsResponse tweetsResponse, UsersResponse usersResponse)
+		public TwitterDataMapper (ScoreCalculator scoreCalculator)
+		{
+			this.scoreCalculator = scoreCalculator;
+		}
+
+		public TwitterTrend Map (string query, TweetsResponse tweetsResponse, UsersResponse usersResponse)
 		{
 			var metricSummary = new Metrics();
 
@@ -55,11 +61,23 @@ namespace WhichTagApi.Mappers
 
 			return new TwitterTrend
 			{
-				QueriedAt = DateTime.Now,
+				QueriedAt = DateTime.UtcNow,
 				Query = query,
 				Tweets = tweets.Values,
 				MetricSummary = metricSummary,
 				OldestTweetCreatedAt = tweets.TryGetValue(tweetsResponse.Meta.oldest_id, out var tweet) ? (DateTime?)tweet.CreatedAt : null
+			};
+		}
+
+		public TwitterTrendDto MapToDto (TwitterTrend twitterTrend)
+		{
+			return new TwitterTrendDto
+			{
+				Query = twitterTrend.Query,
+				Tweets = twitterTrend.Tweets,
+				Score = scoreCalculator.GetScore(twitterTrend),
+				OldestTweetCreatedAt = twitterTrend.OldestTweetCreatedAt,
+				QueriedAt = twitterTrend.QueriedAt
 			};
 		}
 	}
